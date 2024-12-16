@@ -5,4 +5,4 @@ export const CatchAsyncError=
         Promise.resolve(theFunc(req,res,next)).catch(next);
     };
 
-    
+//export default CatchAsyncError;
