@@ -69,7 +69,7 @@ const reviewSchema = new Schema<IReview>({
 
   const courseDataSchema = new Schema<ICourseData>({
     videoUrl: String,
-    videoThumbnail: Object,
+    //videoThumbnail: Object,
     title: String,
     videoSection: String,
     description: String,
@@ -97,11 +97,11 @@ const reviewSchema = new Schema<IReview>({
     },
     thumbnail: {
       public_id: {
-        required: true,
+        //required: true,
         type: String,
       },
       url: {
-        required: true,
+        //required: true,
         type: String,
       },
     },
