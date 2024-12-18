@@ -8,7 +8,7 @@ cloudinary.config({
     api_key:process.env.CLOUD_API_KEY,
     api_secret:process.env.CLOUD_SECRET_KEY,
 });
-//CRETA server
+//Create server
 app.listen(process.env.PORT,()=>{
     console.log(`Server is connected with Port ${process.env.PORT}`);
     connectDB();
