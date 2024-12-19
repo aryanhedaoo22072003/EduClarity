@@ -5,6 +5,7 @@ import cloudinary from "cloudinary";
 import { createCourse } from "../services/course.service";
 import CourseModel from "../models/course.model";
 import { redis } from "../utils/redis";
+import mongoose from "mongoose";
 
 //upload course
 export const uploadCourse = CatchAsyncError(
@@ -138,7 +139,7 @@ export const getCourseByUser = CatchAsyncError(
       const courseId = req.params.id;
       const userCourseList = req.user?.courses;
 
-    //   console.log(courseId);
+      //   console.log(courseId);
 
       const courseExists = userCourseList?.find(
         (course: any) => course._id.toString() === courseId
@@ -155,6 +156,57 @@ export const getCourseByUser = CatchAsyncError(
       res.status(200).json({
         success: true,
         content,
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  }
+);
+
+//add question in course
+interface IAddQuestionData {
+  question: string;
+  courseId: string;
+  contentId: string;
+}
+export const addQuestion = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { question, courseId, contentId }: IAddQuestionData = req.body;
+      const course = await CourseModel.findById(courseId);
+
+      if (!mongoose.Types.ObjectId.isValid(contentId)|| !mongoose.Types.ObjectId.isValid(courseId)) {
+        return next(new ErrorHandler("Invalid content and course id", 400));
+      }
+      
+      if (!course) {
+        return next(new ErrorHandler("Course not found", 404));
+      }
+  
+      const courseContent = course?.courseData?.find((item: any) =>
+        item._id.equals(contentId)
+      );
+
+      if (!courseContent) {
+        return next(new ErrorHandler("content not found", 400));
+      }
+
+      //create a new question object
+      const newQuestion: any = {
+        user: req.user,
+        question,
+        questionReplies: [],
+      };
+
+      //add this question to the course content
+      courseContent.questions.push(newQuestion);
+
+      //save the updated course
+      await course?.save();
+
+      res.status(200).json({
+        success: true,
+        course,
       });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 500));
