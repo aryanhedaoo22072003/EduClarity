@@ -58,7 +58,7 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     },
     courses: [
       {
-        courseId: String,
+        courseId:{ type: String, required: true },
       },
     ],
   },

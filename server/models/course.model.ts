@@ -31,6 +31,7 @@ interface ICourseData extends Document {
 }
 
 interface ICourse extends Document {
+  _id:mongoose.Types.ObjectId; 
   name: string;
   description: string;
   price: number;
