@@ -1,127 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
     />
     <title>Order Confirmation</title>
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            max-width: 600px;
-            background-color: #4f5ef1;
-            color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        p {
-            text-align: center;
-            font-size: 16px;
-            margin-bottom: 30px;
-        }
-        h4 {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        td, th {
-            padding: 8px 10px;
-            text-align: left;
-            font-size: 14px;
-        }
-        th {
-            font-weight: 600;
-            border-bottom: 2px solid #ffffff44;
-        }
-        td {
-            border-bottom: 1px solid #ffffff22;
-        }
-        .order-details {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #ffffff33;
-            border-radius: 5px;
-        }
-        .footer {
-            text-align: center;
-            font-size: 14px;
-            margin-top: 20px;
-            color: #ffffff;
-            opacity: 0.9;
-        }
-        .footer a {
-            color: #ffffff;
-            text-decoration: underline;
-        }
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .container {
+        max-width: 600px;
+        background-color: #4f5ef1;
+        color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      p {
+        text-align: center;
+        font-size: 16px;
+        margin-bottom: 30px;
+      }
+      h4 {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 15px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      td,
+      th {
+        padding: 8px 10px;
+        text-align: left;
+        font-size: 14px;
+      }
+      th {
+        font-weight: 600;
+        border-bottom: 2px solid #ffffff44;
+      }
+      td {
+        border-bottom: 1px solid #ffffff22;
+      }
+      .order-details div{
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ffffff33;
+        border-radius: 5px;
+      }
+      .footer {
+        text-align: center;
+        font-size: 14px;
+        margin-top: 20px;
+        color: #ffffff;
+        opacity: 0.9;
+      }
+      .footer a {
+        color: #ffffff;
+        text-decoration: underline;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="message-sm">
-            <h1>Your EduClarity Order 🛒 is Confirmed!</h1>
-            <p>And we're excited to help you achieve your goals! 🎉</p>
+      <div class="message-sm">
+        <h1>Your EduClarity Order 🛒 is Confirmed!</h1>
+        <p>And we're excited to help you achieve your goals! 🎉</p>
+      </div>
+      <div class="course-info">
+        <h4>Here's what you ordered:</h4>
+        <div class="order-details">
+          <div><strong>Order #:</strong> <%= order._id %></div>
+          <div><strong>Order Date:</strong> <%= order.data %></div>
         </div>
-        <div class="course-info">
-            <h4>Here's what you ordered:</h4>
-            <div class="order-details">
-                <span><strong>Order #:</strong> <%= order._id %></span>
-                
-                <span><strong>Order Date:</strong> <%= order.data %></span>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>Qty</th>
-                        <th>Cost</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><%= order.name %></td>
-                        <td>1</td>
-                        <td>$<%= order.price %></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="footer">
-            <p>
-                If you have any questions, please contact our support team at
-                <a href="mailto:support@educlarity.com">support@educlarity.com</a>.
-            </p>
-            <p>&copy; 2024 EduClarity. All rights reserved.</p>
-        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Qty</th>
+              <th>Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= order.name %></td>
+              <td>1</td>
+              <td>$<%= order.price %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="footer">
+        <p>
+          If you have any questions, please contact our support team at
+          <a href="mailto:support@educlarity.com">support@educlarity.com</a>.
+        </p>
+        <p>&copy; 2024 EduClarity. All rights reserved.</p>
+      </div>
     </div>
-</body>
+  </body>
 </html>
