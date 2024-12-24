@@ -4,10 +4,7 @@
 import React, { FC, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  AiOutlineEye,
-  AiOutlineEyeInvisible,
-} from "react-icons/ai";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { styles } from "../../../app/styles/style";
 
 type Props = {
@@ -49,9 +46,9 @@ const Login: FC<Props> = (props: Props) => {
             onChange={handleChange}
             id="email"
             placeholder="loginmail@gmail.com"
-            className={`${
-              errors.email && touched.email && "border-red-500"
-            } ${styles.input}`}
+            className={`${errors.email && touched.email && "border-red-500"} ${
+              styles.input
+            }`}
           />
           {errors.email && touched.email && (
             <span className="text-red-500 pt-2 block">{errors.email}</span>
@@ -92,13 +89,7 @@ const Login: FC<Props> = (props: Props) => {
           )}
         </div>
         <div className="w-full mt-5">
-          <input
-            type="submit"
-            value="Login"
-            className={`${styles.button}`}
-          />
-
-
+          <input type="submit" value="Login" className={`${styles.button}`} />
         </div>
       </form>
     </div>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-require-imports */
-'use client'
+"use client";
 //import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,31 +11,28 @@ import { BiSearch } from "react-icons/bi";
 type Props = {};
 
 const Hero: FC<Props> = (props) => {
-//   const { data,isLoading } = useGetHeroDataQuery("Banner", {});
-//   const [search,setSearch] = useState("");
-//   const router = useRouter()
-  
+  //   const { data,isLoading } = useGetHeroDataQuery("Banner", {});
+  //   const [search,setSearch] = useState("");
+  //   const router = useRouter()
 
-//   const handleSearch = () => {
-//    if(search === ""){
-//     return
-//    }else{
-//     router.push(`/courses?title=${search}`);
-//    }
-//   }
-
+  //   const handleSearch = () => {
+  //    if(search === ""){
+  //     return
+  //    }else{
+  //     router.push(`/courses?title=${search}`);
+  //    }
+  //   }
 
   return (
-//    <>
-//    {
-//     isLoading ? (
-//       <Loader />
-//     ) : (
-      <div className="w-full 1000px:flex items-center">
+    //    <>
+    //    {
+    //     isLoading ? (
+    //       <Loader />
+    //     ) : (
+    <div className="w-full 1000px:flex items-center">
       <div className="absolute top-[100px] 1000px:top-[unset] 1500px:h-[700px] 1500px:w-[700px] 1100px:h-[600px] 1100px:w-[600px] h-[40vh] left-5 w-[40vh] hero_animation rounded-[50%] 1100px:left-8 1500px:left-14"></div>
       <div className="1000px:w-[40%] flex 1000px:min-h-screen items-center justify-end pt-[70px] 1000px:pt-[0] z-10">
         <Image
-          
           src={require("../../../public/assets/banner-img-1.png")}
           alt=""
           className="object-contain 1100px:max-w-[90%] w-[90%] 1500px:max-w-[85%] h-[auto] z-[10]"
@@ -47,7 +44,8 @@ const Hero: FC<Props> = (props) => {
         </h2>
         <br />
         <p className="dark:text-[#edfff4] text-[#000000ac] font-Josefin font-[600] text-[18px] 1500px:!w-[55%] 1100px:!w-[78%]">
-         We have 4k+ courses in various fields. Our courses are designed to help you improve your skills and knowledge in a short
+          We have 4k+ courses in various fields. Our courses are designed to
+          help you improve your skills and knowledge in a short
         </p>
         <br />
         <br />
@@ -59,8 +57,9 @@ const Hero: FC<Props> = (props) => {
             // onChange={(e) => setSearch(e.target.value)}
             className="bg-transparent border dark:border-none dark:bg-[#575757] dark:placeholder:text-[#ffffffdd] rounded-[5px] p-2 w-full h-full outline-none text-[#0000004e] dark:text-[#ffffffe6] text-[20px] font-[500] font-Josefin"
           />
-          <div className="absolute flex items-center justify-center w-[50px] cursor-pointer h-[50px] right-0 top-0 bg-[#39c1f3] rounded-r-[5px]"
-        //   onClick={handleSearch}
+          <div
+            className="absolute flex items-center justify-center w-[50px] cursor-pointer h-[50px] right-0 top-0 bg-[#39c1f3] rounded-r-[5px]"
+            //   onClick={handleSearch}
           >
             <BiSearch className="text-white" size={30} />
           </div>
@@ -96,8 +95,8 @@ const Hero: FC<Props> = (props) => {
         <br />
       </div>
     </div>
-    )
-   }
+  );
+};
 //    </>
 //   );
 // };
