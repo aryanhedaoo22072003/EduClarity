@@ -112,7 +112,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
         </>
       )}
 
-{route === "Sign-Up" && (
+      {route === "Sign-Up" && (
         <>
           {open && (
             <CustomModal
@@ -138,8 +138,6 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
           )}
         </>
       )}
-      
-
     </div>
   );
 };
