@@ -1,13 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
  
 "use client";
 
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AiFillGithub, AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { styles } from "../../../app/styles/style";
 import { FcGoogle } from "react-icons/fc";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
+import toast from "react-hot-toast";
 
 type Props = {
   setRoute: (route: string) => void;
@@ -23,12 +27,30 @@ const schema = Yup.object().shape({
 
 const Signup: FC<Props> = ({setRoute}) => {
   const [show, setShow] = useState(false);
+  const [register,{data,error,isSuccess}]=useRegisterMutation();
+
+  useEffect(()=>{
+    if(isSuccess){
+      const message=data?.message || "Registration successful";
+      toast.success(message);
+      setRoute("Verification");   
+    }
+    if(error){
+        if("data" in error){
+            const errorData=error as any;
+            toast.error(errorData.data.message);
+        }
+    }
+    },[isSuccess,error]);
 
   const formik = useFormik({
     initialValues: { name:"",email: "", password: "" },
     validationSchema: schema,
     onSubmit: async ({ email, password }) => {
-      setRoute("Verification")
+      const data={
+        name,email,password
+      };
+      await register(data);
     },
   });
 
@@ -119,9 +141,9 @@ const Signup: FC<Props> = ({setRoute}) => {
         </h5>
         <div className="flex items-center justify-center my-3">
           <FcGoogle size={30} className="cursor-pointer mr-2" />
-            <AiFillGithub size={30} className="cursor-pointer ml-2" />
+            <AiFillGithub size={30} className="cursor-pointer ml-2 text-black dark:text-white" />
         </div>
-        <h5 className="text-center pt-4 font-Poppins text-[14px]">
+        <h5 className="text-center pt-4 font-Poppins text-[14px] text-black dark:text-white">
           Already have an account?{" "}
           <span 
            className="text-[#2190ff] pl-1 cursor-pointer"
