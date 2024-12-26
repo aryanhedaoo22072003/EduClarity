@@ -73,17 +73,18 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                   onClick={() => setOpenSidebar(true)}
                 />
               </div>
-              {user  ? (
+              {user ? (
                 <Link href={"/profile"}>
-                <Image
-                  src={user.avatar ? user.avatar :avatar}
-                  alt=""
-                  width={30}
-                  height={30}
-                  className="w-[30px] h-[30px] rounded-full cursor-pointer"
-                  style={{border: activeItem === 5 ? "2px solid #37a39a" : "none"}}
-
-                />
+                  <Image
+                    src={user.avatar ? user.avatar : avatar}
+                    alt=""
+                    width={30}
+                    height={30}
+                    className="w-[30px] h-[30px] rounded-full cursor-pointer"
+                    style={{
+                      border: activeItem === 5 ? "2px solid #37a39a" : "none",
+                    }}
+                  />
                 </Link>
               ) : (
                 <HiOutlineUserCircle
@@ -91,7 +92,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                   className="hidden 800px:block cursor-pointer dark:text-white text-black"
                   onClick={() => setOpen(true)}
                 />
-              )} 
+              )}
             </div>
           </div>
         </div>
