@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Link from "next/link";
@@ -14,7 +16,7 @@ import avatar from "../../public/assets/avatar.png";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useSocialAuthMutation } from "@/redux/features/auth/authApi";
-import { name } from "ejs";
+// import { name } from "ejs";
 import toast from "react-hot-toast";
 
 type Props = {
