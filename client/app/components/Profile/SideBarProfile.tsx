@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import avatarDefault from '../../../public/assets/avatar.png';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { SiCoursera } from 'react-icons/si';
+import { AiOutlineLogout } from 'react-icons/ai';
 
 type Props = {
   user: any;
@@ -63,6 +64,21 @@ const SideBarProfile: FC<Props> = ({ user, active, avatar, setActive, logOutHand
         />
         <h5 className="pl-2 800px:block hidden font-Poppins dark:text-white text-black">
           Enrolled Courses
+        </h5>
+      </div>
+      <div
+        className={`w-full flex items-center px-3 py-4 cursor-pointer ${
+          active === 3 ? 'dark:bg-slate-800 bg-gray-100' : 'bg-transparent'
+        }`}
+        onClick={()=>logOutHandler()}
+      >
+        <AiOutlineLogout
+          size={20}
+          fill={active === 3 ? '#000' : 'currentColor'}
+          className="dark:fill-white fill-black"
+        />
+        <h5 className="pl-2 800px:block hidden font-Poppins dark:text-white text-black">
+          Log Out
         </h5>
       </div>
     </div>
