@@ -3,7 +3,7 @@
 'use client'
 import React from 'react'
 import AdminSidebar from "../components/Admin/sidebar/AdminSidebar";
-
+import DashboardHero from "../components/Admin/DashboardHero";
 import AdminProtected from '../hooks/adminProtected';
 import Heading from '../utils/Heading';
 type Props = {}
@@ -22,7 +22,8 @@ const page = (props: Props) => {
           <AdminSidebar />
         </div>
         <div className="w-[85%]">
-          {/* <DashboardHero isDashboard={true} /> */}
+          <DashboardHero  />
+          {/* isDashboard={true} */}
         </div>
       </div>
     </AdminProtected>
