@@ -1,4 +1,6 @@
-
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { styles } from "@/app/styles/style";
 //import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 import React, { FC, useState } from "react";

@@ -1,24 +1,28 @@
-'use client'
-import React, { useState } from 'react'
-import CourseInformation from './CourseInformation'
-import CourseOptions from './CourseOptions'
-type Props = {}
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+"use client";
+import React, { useState } from "react";
+import CourseInformation from "./CourseInformation";
+import CourseOptions from "./CourseOptions";
+import CourseData from "./CourseData";
+
+type Props = {};
 
 const CreateCourse = (props: Props) => {
-    const [active,setActive]=useState(0);
-    const [courseInfo, setCourseInfo] = useState({
-        name: "",
-        description: "",
-        price: "",
-        estimatedPrice: "",
-        tags: "",
-        level: "",
-        categories:"",
-        demoUrl: "",
-        thumbnail: "",
-      });
+  const [active, setActive] = useState(0);
+  const [courseInfo, setCourseInfo] = useState({
+    name: "",
+    description: "",
+    price: "",
+    estimatedPrice: "",
+    tags: "",
+    level: "",
+    categories: "",
+    demoUrl: "",
+    thumbnail: "",
+  });
 
-      const [benefits, setBenefits] = useState([{ title: "" }]);
+  const [benefits, setBenefits] = useState([{ title: "" }]);
   const [prerequisites, setPrerequisites] = useState([{ title: "" }]);
   const [courseContentData, setCourseContentData] = useState([
     {
@@ -37,7 +41,6 @@ const CreateCourse = (props: Props) => {
     },
   ]);
 
-
   const [courseData, setCourseData] = useState({});
 
   return (
@@ -52,7 +55,7 @@ const CreateCourse = (props: Props) => {
           />
         )}
 
-        {/* {active === 1 && (
+        {active === 1 && (
           <CourseData
             benefits={benefits}
             setBenefits={setBenefits}
@@ -61,7 +64,7 @@ const CreateCourse = (props: Props) => {
             active={active}
             setActive={setActive}
           />
-        )} */}
+        )}
 
         {/* {active === 2 && (
           <CourseContent
@@ -89,4 +92,4 @@ const CreateCourse = (props: Props) => {
   );
 };
 
-export default CreateCourse
+export default CreateCourse;
