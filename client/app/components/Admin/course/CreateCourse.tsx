@@ -2,17 +2,36 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CourseInformation from "./CourseInformation";
 import CourseOptions from "./CourseOptions";
 import CourseData from "./CourseData";
 import CourseContent from "./CourseContent";
 import CoursePreview from "./CoursePreview";
-
+import { useCreateCourseMutation } from "../../../../redux/features/courses/coursesApi";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 type Props = {};
 
-const CreateCourse = (props: Props) => {
+const CreateCourse = (props: Props) => { 
+  const [createCourse,{isLoading,isSuccess,error}]=useCreateCourseMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Course created successfully");
+      redirect("/admin/courses");
+    }
+     if (error) {
+      if ("data" in error) {
+        const errorMessage = error as any;
+        toast.error(errorMessage.data.message);
+      }
+    }
+  }, [isLoading,isSuccess, error]);
+
+
+
   const [active, setActive] = useState(0);
   const [courseInfo, setCourseInfo] = useState({
     name: "",
@@ -94,9 +113,9 @@ const CreateCourse = (props: Props) => {
 
     const handleCourseCreate = async (e: any) => {
         const data = courseData;
-        // if (!isLoading) {
-        // await CreateCourse(data);
-        // }
+        if (!isLoading) {
+        await createCourse(data);
+        }
       };
   return (
     <div className="w-full flex min-h-screen">
