@@ -90,7 +90,13 @@ const CreateCourse = (props: Props) => {
     };
     setCourseData(data);
   };
-    console.log(courseData);
+
+    const handleCourseCreate = async (e: any) => {
+        const data = courseData;
+        // if (!isLoading) {
+        // await CreateCourse(data);
+        // }
+      };
   return (
     <div className="w-full flex min-h-screen">
       <div className="w-[80%]">
