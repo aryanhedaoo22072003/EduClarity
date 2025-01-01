@@ -21,17 +21,29 @@ export const userApi = apiSlice.injectEndpoints({
       }),
     }),
     updatePassword: builder.mutation({
-        query: ({oldPassword,newPassword }) => ({
-          url: "update-user-password",
-          method: "PUT",
-          body: {
-            oldPassword,
-            newPassword,
-          },
-          credentials: "include" as const,
-        }),
+      query: ({ oldPassword, newPassword }) => ({
+        url: "update-user-password",
+        method: "PUT",
+        body: {
+          oldPassword,
+          newPassword,
+        },
+        credentials: "include" as const,
       }),
+    }),
+    getAllUsers: builder.query({
+      query: () => ({
+        url: "get-users",
+        method: "GET",
+        credentials: "include" as const,
+      }),
+    }),
   }),
 });
 
-export const { useUpdateAvatarMutation, useEditProfileMutation,useUpdatePasswordMutation } = userApi;
+export const {
+  useUpdateAvatarMutation,
+  useEditProfileMutation,
+  useUpdatePasswordMutation,
+  useGetAllUsersQuery
+} = userApi;

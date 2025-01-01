@@ -1,55 +1,27 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box, Button } from "@mui/material";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete,AiOutlineMail } from "react-icons/ai";
 import { useTheme } from "next-themes";
-import { useGetAllCoursesQuery } from "@/redux/features/courses/coursesApi";
-import { FiEdit2 } from "react-icons/fi";
-import Link from "next/link";
 import { format } from "timeago.js";
 import Loader from "../../Loader/Loader";
+import { useGetAllUsersQuery } from "@/redux/features/user/userApi";
 
 type Props = {};
 
 const AllCourses = (props: Props) => {
   const { theme } = useTheme();
-  const { isLoading, data, error } = useGetAllCoursesQuery({});
+  const { isLoading, data, error } = useGetAllUsersQuery({});
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "title", headerName: "Course Title", flex: 1 },
-    { field: "ratings", headerName: "Ratings", flex: 0.5 },
-    { field: "purchased", headerName: "Purchased", flex: 0.5 },
-    { field: "created_at", headerName: "Created At", flex: 0.5 },
-    {
-      field: "edit",
-      headerName: "Edit",
-      flex: 0.2,
-      renderCell: (params: any) => (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          width="100%"
-          height="100%"
-        >
-          <Link href={`/admin/edit-course/${params.row.id}`}>
-            <FiEdit2
-              style={{
-                color: theme === "dark" ? "#ffffff" : "#000000",
-                cursor: "pointer",
-                transition: "color 0.3s ease",
-              }}
-              size={16}
-            />
-          </Link>
-        </Box>
-      ),
-    },
+    { field: "name", headerName: "Name", flex: 0.5},
+    { field: "email", headerName: "Email", flex: 0.5 },
+    { field: "role", headerName: "Role", flex: 0.5 },
+    { field: "courses", headerName: "Purchased Courses", flex: 0.5 },
+    { field: "created_at", headerName: "Joined At", flex: 0.5 },
     {
       field: "delete",
       headerName: "Delete",
@@ -64,28 +36,46 @@ const AllCourses = (props: Props) => {
         >
           <Button>
             <AiOutlineDelete
-              style={{
-                color: theme === "dark" ? "#ffffff" : "#000000",
-                cursor: "pointer",
-                transition: "color 0.3s ease",
-              }}
+              className='dark:text-white text-blackß'
               size={16}
             />
           </Button>
         </Box>
       ),
     },
+    {
+        field: " ",
+        headerName: "Email",
+        flex: 0.2,
+        renderCell: (params: any) => (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            width="100%"ß
+            height="100%"
+          >
+            <Button>
+              <AiOutlineMail
+                className='dark:text-white text-blackß'
+                size={16}
+              />
+            </Button>
+          </Box>
+        ),
+      },
   ];
 
   const rows: any[] = [];
 
-  if (data && data.courses) {
-    data.courses.forEach((item: any) => {
+ { data && 
+    data.users.forEach((item: any) => {
       rows.push({
         id: item._id,
-        title: item.name,
-        ratings: item.ratings,
-        purchased: item.purchased,
+        name: item.name,
+        email: item.email,
+        role: item.role,
+        courses:item.courses.length,
         created_at: format(item.createdAt),
       });
     });
