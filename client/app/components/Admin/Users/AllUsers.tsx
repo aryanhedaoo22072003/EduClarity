@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
-import React from "react";
+import React, { FC } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box, Button } from "@mui/material";
 import { AiOutlineDelete,AiOutlineMail } from "react-icons/ai";
@@ -8,16 +7,19 @@ import { useTheme } from "next-themes";
 import { format } from "timeago.js";
 import Loader from "../../Loader/Loader";
 import { useGetAllUsersQuery } from "@/redux/features/user/userApi";
+import { styles } from "@/app/styles/style";
 
-type Props = {};
+type Props = {
+    isTeam:boolean
+};
 
-const AllCourses = (props: Props) => {
+const AllCourses:FC<Props> = ({isTeam}) => {
   const { theme } = useTheme();
   const { isLoading, data, error } = useGetAllUsersQuery({});
 
-  const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "name", headerName: "Name", flex: 0.5},
+const columns = [
+    { field: "id", headerName: "ID", flex: 0.3 },
+    { field: "name", headerName: "Name", flex: 0.5 },
     { field: "email", headerName: "Email", flex: 0.5 },
     { field: "role", headerName: "Role", flex: 0.5 },
     { field: "courses", headerName: "Purchased Courses", flex: 0.5 },
@@ -36,50 +38,65 @@ const AllCourses = (props: Props) => {
         >
           <Button>
             <AiOutlineDelete
-              className='dark:text-white text-blackß'
-              size={16}
+              className="dark:text-white text-black"
+              size={20}
             />
           </Button>
         </Box>
       ),
     },
     {
-        field: " ",
-        headerName: "Email",
-        flex: 0.2,
-        renderCell: (params: any) => (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            width="100%"ß
-            height="100%"
-          >
-            <Button>
-              <AiOutlineMail
-                className='dark:text-white text-blackß'
-                size={16}
-              />
-            </Button>
-          </Box>
-        ),
-      },
+      field: "emailAction",
+      headerName: "Email",
+      flex: 0.2,
+      renderCell: (params: any) => (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          width="100%"
+          height="100%"
+        >
+          <a href={`mailto:${params.row.email}`}>
+            <AiOutlineMail
+              className="dark:text-white text-black"
+              size={20}
+            />
+          </a>
+        </Box>
+      ),
+    },
   ];
+  
+const rows: any[] = [];
 
-  const rows: any[] = [];
-
- { data && 
-    data.users.forEach((item: any) => {
-      rows.push({
-        id: item._id,
-        name: item.name,
-        email: item.email,
-        role: item.role,
-        courses:item.courses.length,
-        created_at: format(item.createdAt),
-      });
-    });
+  if(isTeam){
+    const newData=data && data.users.filter((item:any)=>item.role==='admin')
+    newData && 
+    newData.forEach((item: any) => {
+          rows.push({
+            id: item._id,
+            name: item.name,
+            email: item.email,
+            role: item.role,
+            courses:item.courses.length,
+            created_at: format(item.createdAt),
+          });
+        });
+      }else{
+        data && 
+        data.users.forEach((item: any) => {
+          rows.push({
+            id: item._id,
+            name: item.name,
+            email: item.email,
+            role: item.role,
+            courses:item.courses.length,
+            created_at: format(item.createdAt),
+          });
+        });
   }
+
 
   return (
     <div className="mt-[120px]">
@@ -87,6 +104,11 @@ const AllCourses = (props: Props) => {
         <Loader />
       ) : (
         <Box m="20px">
+            <div className="w-full flex justify-end">
+                <div className={`${styles.button} !w-[200px] dark:bg-[#57c7a3] !h-[35px] dark:border dark:border-[#ffffff6c]`}>
+                    Add New Member
+                </div>
+            </div>
           <Box
           
             m="40px 0 0 0"
