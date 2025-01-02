@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // import { styles } from "@/app/styles/style";
 // import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 // import React, { FC, useEffect, useState } from "react";
@@ -107,42 +109,66 @@
 
 
 import { styles } from "@/app/styles/style";
-import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
+import { useEditLayoutMutation, useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 import React, { FC, useEffect, useState } from "react";
 import { AiOutlineCamera } from "react-icons/ai";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 type Props = {};
 
 const EditHero: FC<Props> = (props: Props) => {
-  const [image, setImage] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
-  const [subTitle, setSubTitle] = useState<string>("");
-  const { data } = useGetHeroDataQuery("Banner", {
+  const [image, setImage] = useState("");
+  const [title, setTitle] = useState("");
+  const [subTitle, setSubTitle] = useState("");
+  const { data,refetch } = useGetHeroDataQuery("Banner", {
     refetchOnMountOrArgChange: true,
   });
 
+  const [editLayout,{isLoading,isSuccess,error}]=useEditLayoutMutation();
   useEffect(() => {
-    console.log("API Data:", data); // Log full API response for debugging
+    console.log("API Data:", data); 
     if (data) {
-      setTitle(data?.layout?.banner?.title || "");
-      setSubTitle(data?.layout?.banner?.subTitle || "");
-      setImage(data?.layout?.banner?.image?.url || "/default-image.jpg"); // Fallback image
+      setTitle(data?.layout?.banner?.title );
+      setSubTitle(data?.layout?.banner?.subTitle );
+      setImage(data?.layout?.banner?.image?.url ); // Fallback image
       console.log("Image URL:", data?.layout?.banner?.image?.url); // Log image URL
     }
-  }, [data]);
+    if (isSuccess) {
+        
+        toast.success("Hero updated successfully!");
+        refetch();
+       
+    }
+    if (error) {
+        if ("data" in error) {
+          const errorData = error as any;
+          toast.error(errorData?.data?.message);
+        }
+    }
+  }, [data,isSuccess,error]);
 
-  const handleUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpdate = (e: any) => {
     const file = e.target.files?.[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file); // Create a local URL for the uploaded image
-      setImage(imageUrl);
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        if (reader.readyState === 2) {
+          setImage(e.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
     }
   };
 
-  const handleEdit = () => {
-    // Logic to handle save/update functionality
-    console.log("Saving changes:", { title, subTitle, image });
+  const handleEdit =async () => {
+    
+    await editLayout({
+        type: "Banner",
+        image,
+        title,
+        subTitle,
+      });
   };
 
   return (
@@ -153,8 +179,8 @@ const EditHero: FC<Props> = (props: Props) => {
           <div className="relative flex items-center justify-end">
             <Image
               src={image}
-              alt="Banner Image"
-              layout="intrinsic"
+              alt=""
+              layout=""
               width={500}
               height={300}
               className="object-contain 1100px:max-w-[90%] w-[90%] 1500px:max-w-[85%] h-[auto] z-[10]"
