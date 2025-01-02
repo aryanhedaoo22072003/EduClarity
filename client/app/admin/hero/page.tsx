@@ -3,11 +3,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import React from 'react'
-import AdminSidebar from "../../../components/Admin/sidebar/AdminSidebar";
-import Heading from '../../../../app/utils/Heading';
-import DashboardHeader from '../../../../app/components/Admin/DashboardHeader';
-import EditCourse from "../../../components/Admin/course/EditCourse";
-
+import DashboardHero from '@/app/components/Admin/DashboardHero'
+import AdminProtected from '@/app/hooks/adminProtected'
+import Heading from '@/app/utils/Heading'
+import AdminSidebar from '../../components/Admin/sidebar/AdminSidebar'
+import EditHero from '../../components/Admin/Customization/EditHero';
 type Props = {}
 
 const page = ({params}:any) => {
@@ -15,20 +15,22 @@ const page = ({params}:any) => {
 
   return (
     <div>
+        <AdminProtected>
         <Heading
          title="Elearning - Admin"
          description="ELearning is a platform for students to learn and get help from teachers"
          keywords="Prograaming,MERN,Redux,Machine Learning"
         />
-        <div className="flex">
+        <div className="flex h-screen">
             <div className="1500px:w-[16%] w-1/5">
                 <AdminSidebar />
             </div>
             <div className="w-[85%]">
-               <DashboardHeader />
-               <EditCourse id={id} />
+               <DashboardHero />
+               <EditHero />
             </div>
         </div>
+        </AdminProtected>
     </div>
   )
 }
