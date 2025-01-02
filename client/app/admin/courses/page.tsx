@@ -8,7 +8,7 @@ import React from 'react'
 import AdminSidebar from "../../components/Admin/sidebar/AdminSidebar";
 import AllCourses from '../../components/Admin/course/AllCourses'
 type Props = {}
-
+ 
 const page = (props: Props) => {
   return (
     <div>
