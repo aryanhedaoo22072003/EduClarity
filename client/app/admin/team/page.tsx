@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 'use client'
 import DashboardHero from '@/app/components/Admin/DashboardHero'
