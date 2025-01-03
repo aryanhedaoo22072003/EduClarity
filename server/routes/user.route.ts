@@ -25,7 +25,7 @@ userRouter.put('/update-user-avatar',updateAccessToken,isAuthenticated,updatePro
 
 userRouter.get('/get-users',updateAccessToken,isAuthenticated,authorizeRoles("admin"),getAllUsers);
 
-userRouter.put('/update-user',updateAccessToken,isAuthenticated,authorizeRoles("admin"),updateUserRole);
+userRouter.put('/update-user',isAuthenticated,authorizeRoles("admin"),updateUserRole);
 
 userRouter.delete('/delete-user/:id',updateAccessToken,isAuthenticated,authorizeRoles("admin"),deleteUser);
 
