@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // import React from "react";
 // import {
 //   BarChart,
@@ -204,6 +207,7 @@ import { styles } from "@/app/styles/style";
 
 type Props = {};
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CourseAnalytics = (props: Props) => {
   const { data, isLoading } = useGetCoursesAnalyticsQuery({});
   const [startDate, setStartDate] = useState("");
