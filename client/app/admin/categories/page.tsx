@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React from "react";
 import DashboardHero from "@/app/components/Admin/DashboardHero";
 import AdminProtected from "@/app/hooks/adminProtected";
 import Heading from "@/app/utils/Heading";
 import AdminSidebar from "../../components/Admin/sidebar/AdminSidebar";
-import EditHero from "../../components/Admin/Customization/EditHero";
+import EditCategories from "../../components/Admin/Customization/EditCategories";
 type Props = {};
 
-const page = ({ params }: any) => {
-  const id = params?.id;
-
+const page = (props: Props) => {
   return (
     <div>
       <AdminProtected>
@@ -27,7 +24,7 @@ const page = ({ params }: any) => {
           </div>
           <div className="w-[85%]">
             <DashboardHero />
-            <EditHero />
+            <EditCategories />
           </div>
         </div>
       </AdminProtected>

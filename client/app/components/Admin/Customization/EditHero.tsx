@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // import { styles } from "@/app/styles/style";
@@ -21,7 +23,7 @@
 //       setSubTitle(data?.layout?.banner.subTitle);
 //       setImage(data?.layout?.banner?.image?.url);
 //     }
-   
+
 //   }, [data]);
 
 //   const handleUpdate = (e: any) => {
@@ -77,7 +79,7 @@
 //           <div
 //             className={`${
 //               styles.button
-//             } !w-[100px] !min-h-[40px] !h-[40px] dark:text-white text-black bg-[#cccccc34] 
+//             } !w-[100px] !min-h-[40px] !h-[40px] dark:text-white text-black bg-[#cccccc34]
 //           ${
 //             data?.layout?.banner?.title !== title ||
 //             data?.layout?.banner?.subTitle !== subTitle ||
@@ -104,12 +106,11 @@
 
 // export default EditHero;
 
-
-
-
-
 import { styles } from "@/app/styles/style";
-import { useEditLayoutMutation, useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
+import {
+  useEditLayoutMutation,
+  useGetHeroDataQuery,
+} from "@/redux/features/layout/layoutApi";
 import React, { FC, useEffect, useState } from "react";
 import { AiOutlineCamera } from "react-icons/ai";
 import Image from "next/image";
@@ -121,32 +122,30 @@ const EditHero: FC<Props> = (props: Props) => {
   const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
   const [subTitle, setSubTitle] = useState("");
-  const { data,refetch } = useGetHeroDataQuery("Banner", {
+  const { data, refetch } = useGetHeroDataQuery("Banner", {
     refetchOnMountOrArgChange: true,
   });
 
-  const [editLayout,{isLoading,isSuccess,error}]=useEditLayoutMutation();
+  const [editLayout, { isLoading, isSuccess, error }] = useEditLayoutMutation();
   useEffect(() => {
-    console.log("API Data:", data); 
+    console.log("API Data:", data);
     if (data) {
-      setTitle(data?.layout?.banner?.title );
-      setSubTitle(data?.layout?.banner?.subTitle );
-      setImage(data?.layout?.banner?.image?.url ); // Fallback image
+      setTitle(data?.layout?.banner?.title);
+      setSubTitle(data?.layout?.banner?.subTitle);
+      setImage(data?.layout?.banner?.image?.url); // Fallback image
       console.log("Image URL:", data?.layout?.banner?.image?.url); // Log image URL
     }
     if (isSuccess) {
-        
-        toast.success("Hero updated successfully!");
-        refetch();
-       
+      toast.success("Hero updated successfully!");
+      refetch();
     }
     if (error) {
-        if ("data" in error) {
-          const errorData = error as any;
-          toast.error(errorData?.data?.message);
-        }
+      if ("data" in error) {
+        const errorData = error as any;
+        toast.error(errorData?.data?.message);
+      }
     }
-  }, [data,isSuccess,error]);
+  }, [data, isSuccess, error]);
 
   const handleUpdate = (e: any) => {
     const file = e.target.files?.[0];
@@ -161,14 +160,13 @@ const EditHero: FC<Props> = (props: Props) => {
     }
   };
 
-  const handleEdit =async () => {
-    
+  const handleEdit = async () => {
     await editLayout({
-        type: "Banner",
-        image,
-        title,
-        subTitle,
-      });
+      type: "Banner",
+      image,
+      title,
+      subTitle,
+    });
   };
 
   return (
