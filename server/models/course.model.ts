@@ -1,5 +1,6 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 import { IUser } from "./user.model";
+
 interface IComment extends Document {
   user: IUser;
   question: string;
@@ -7,9 +8,9 @@ interface IComment extends Document {
 }
 interface IReview extends Document {
   user: IUser;
-  rating: number;
+  rating?: number;
   comment: string;
-  commentReplies: IComment[];
+  commentReplies?: IReview[];
 }
 
 interface ILink extends Document {
@@ -34,6 +35,7 @@ interface ICourse extends Document {
   _id:mongoose.Types.ObjectId; 
   name: string;
   description: string;
+  categories:string;
   price: number;
   estimatedPrice?: number;
   thumbnail: object;
@@ -56,7 +58,7 @@ const reviewSchema = new Schema<IReview>({
   },
   comment: String,
   commentReplies:[Object],
-});
+},{timestamps:true});
 
 const linkSchema = new Schema<ILink>({
   title: String,
@@ -67,7 +69,7 @@ const commentSchema = new Schema<IComment>({
   user: Object,
   question: String,
   questionReplies: [Object],
-});
+},{timestamps:true});
 
 const courseDataSchema = new Schema<ICourseData>({
   videoUrl: String,
@@ -75,7 +77,7 @@ const courseDataSchema = new Schema<ICourseData>({
   title: String,
   videoSection: String,
   description: String,
-  videoLength: String,
+  videoLength: Number,
   links: [linkSchema],
   sugggestion: String,
   questions: [commentSchema],
@@ -87,6 +89,10 @@ const courseSchema = new Schema<ICourse>({
     required: true,
   },
   description: {
+    type: String,
+    required: true,
+  },
+  categories:{
     type: String,
     required: true,
   },

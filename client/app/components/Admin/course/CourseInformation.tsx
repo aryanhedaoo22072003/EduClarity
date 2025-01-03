@@ -2,8 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { styles } from "@/app/styles/style";
+import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 //import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 type Props = {
   courseInfo: any;
   setCourseInfo: (courseInfo: any) => void;
@@ -18,6 +19,16 @@ const CourseInformation: FC<Props> = ({
   setActive,
 }) => {
   const [dragging, setDragging] = useState(false);
+
+  const {data}=useGetHeroDataQuery("Categories",{});
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    if (data) {
+      setCategories(data.layout?.categories);
+    }
+  }, [data]);
+
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -135,8 +146,8 @@ const CourseInformation: FC<Props> = ({
           </div>
         </div>
         <br />
-        {/* <div className="w-full flex justify-between"> */}
-        <div>
+        <div className="w-full flex justify-between">
+          <div className="w-[45%]">
           <label className={`${styles.label}`} htmlFor="email">
             Course Tags
           </label>
@@ -153,7 +164,33 @@ const CourseInformation: FC<Props> = ({
             className={`
             ${styles.input}`}
           />
+          </div>
+          <div className="w-[50%]">
+            <label className={`${styles.label} w-[50%]`}>
+              Course Categories
+            </label>
+            <select 
+            name="" 
+            id="" 
+            className={`${styles.input}`}
+            value={courseInfo.category}
+            onChange={(e: any) =>
+              setCourseInfo({ ...courseInfo, category: e.target.value })
+            }>
+              <option className="dark:bg-[#000] text-[#fff]" value="">Select Category</option>
+              {categories &&
+              categories.map((item:any)=>(
+                <option className="dark:bg-[#000] text-[#fff]"
+                value={item.title}
+                key={item._id}>
+                  {item.title}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
+        {/* <div className="w-full flex justify-between"> */}
+        
         {/* </div> */}
         <br />
         <div className="w-full flex justify-between">
@@ -184,7 +221,7 @@ const CourseInformation: FC<Props> = ({
                 setCourseInfo({ ...courseInfo, demoUrl: e.target.value })
               }
               id="demoUrl"
-              placeholder="eer74fd"
+              placeholder="Enter Demo Url"
               className={`
                     ${styles.input}`}
             />
