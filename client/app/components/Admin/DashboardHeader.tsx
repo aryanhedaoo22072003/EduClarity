@@ -14,11 +14,11 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 // const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 type Props = {
-//   open?: boolean;
-//   setOpen?: any;
+  open?: boolean;
+  setOpen?: any;
 };
 
-const DashboardHeader: FC<Props> = ({  }) => {
+const DashboardHeader: FC<Props> = ({open,setOpen }) => {
 //   const { data, refetch } = useGetAllNotificationsQuery(undefined, {
 //     refetchOnMountOrArgChange: true,
 //   });
@@ -31,7 +31,7 @@ const DashboardHeader: FC<Props> = ({  }) => {
 //         "https://res.cloudinary.com/damk25wo5/video/upload/v1693465789/notification_vcetjn.mp3"
 //       )
 //   );
-const [open, setOpen] = useState(false);
+// const [open, setOpen] = useState(false);
 
 //   //const playNotificationSound = () => {
 //     audio.play();
