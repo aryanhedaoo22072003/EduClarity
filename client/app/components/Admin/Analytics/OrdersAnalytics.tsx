@@ -162,7 +162,7 @@ export default function OrdersAnalytics({ isDashboard }: Props) {
           </div>
 
           {/* Filters */}
-          <div className="flex justify-between px-5 mb-5">
+          <div className="flex justify-between px-5 mb-5 dark:text-white text-black ">
             <input
               type="date"
               value={startDate}

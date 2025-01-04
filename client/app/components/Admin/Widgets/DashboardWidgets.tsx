@@ -213,7 +213,7 @@ const DashboardWidgets: FC<Props> = ({ open }) => {
   }, [isLoading, ordersLoading, data, ordersData]);
 
   return (
-    <div className="mt-[30px] min-h-screen ">
+    <div className="mt-[30px] min-h-screen dark:text-[#45CBA0] text-black   ">
       <div className="grid grid-cols-[75%,25%]">
         <div className="p-8 ">
           <UserAnalytics isDashboard={true} />
@@ -232,7 +232,7 @@ const DashboardWidgets: FC<Props> = ({ open }) => {
                 </h5>
               </div>
               <div>
-                <CircularProgressWithLabel value={
+                <CircularProgressWithLabel  value={
                   ordersComparePercentage?.percentChange > 0 
                   ? 100 
                   : 0
