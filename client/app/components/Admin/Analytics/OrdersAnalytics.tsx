@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // import { styles } from "@/app/styles/style";
 // import { useGetOrdersAnalyticsQuery } from "@/redux/features/analytics/analyticsApi";
 // import React, { useEffect } from "react";
@@ -124,18 +126,18 @@ export default function OrdersAnalytics({ isDashboard }: Props) {
         })
       : analyticsData;
 
-  const downloadChart = () => {
-    const chartElement = document.querySelector(".chart-wrapper");
-    if (chartElement) {
-      html2canvas(chartElement).then((canvas) => {
-        const link = document.createElement("a");
-        link.download = "orders-analytics.png";
-        link.href = canvas.toDataURL();
-        link.click();
-      });
-    }
-  };
-
+      const downloadChart = () => {
+        const chartElement = document.querySelector(".chart-wrapper") as HTMLElement;
+        if (chartElement) {
+          html2canvas(chartElement).then((canvas) => {
+            const link = document.createElement("a");
+            link.download = "orders-analytics.png";
+            link.href = canvas.toDataURL();
+            link.click();
+          });
+        }
+      };
+      
   return (
     <>
       {isLoading ? (

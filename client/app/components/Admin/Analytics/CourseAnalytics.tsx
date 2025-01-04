@@ -229,7 +229,7 @@ const CourseAnalytics = (props: Props) => {
       : analyticsData;
 
   const downloadChart = () => {
-    const chartElement = document.querySelector(".recharts-wrapper");
+    const chartElement = document.querySelector(".recharts-wrapper")as HTMLElement;
     if (chartElement) {
       html2canvas(chartElement).then((canvas) => {
         const link = document.createElement("a");

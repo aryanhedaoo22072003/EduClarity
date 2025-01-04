@@ -120,7 +120,7 @@ const UserAnalytics = ({ isDashboard }: Props) => {
       : analyticsData;
 
   const downloadChart = () => {
-    const chartElement = document.querySelector(".chart-wrapper");
+    const chartElement = document.querySelector(".chart-wrapper") as HTMLElement;
     if (chartElement) {
       html2canvas(chartElement).then((canvas) => {
         const link = document.createElement("a");

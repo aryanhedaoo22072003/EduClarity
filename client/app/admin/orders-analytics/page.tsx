@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import React from 'react'
 import AdminSidebar from "../../components/Admin/sidebar/AdminSidebar";
 import Heading from '../../../app/utils/Heading';
-import OrdersAnalytics from "../../components/Admin/Analytics/OrdersAnalytics.tsx";
+import OrdersAnalytics from "../../components/Admin/Analytics/OrdersAnalytics";
 import DashboardHeader from '../../../app/components/Admin/DashboardHeader';
 
 type Props = {}
