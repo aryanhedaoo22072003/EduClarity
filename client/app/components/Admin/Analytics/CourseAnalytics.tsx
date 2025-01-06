@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import {
   BarChart,
@@ -36,7 +40,7 @@ const CourseAnalytics = (props: Props) => {
       : analyticsData;
 
   const downloadChart = () => {
-    const chartElement = document.querySelector(".recharts-wrapper");
+    const chartElement = document.querySelector(".recharts-wrapper")as HTMLElement;
     if (chartElement) {
       html2canvas(chartElement).then((canvas) => {
         const link = document.createElement("a");

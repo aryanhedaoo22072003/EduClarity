@@ -9,9 +9,9 @@ import Heading from "@/app/utils/Heading";
 import AdminSidebar from "../../components/Admin/sidebar/AdminSidebar";
 import EditHero from "../../components/Admin/Customization/EditHero";
 type Props = {};
-
-const page = ({ params }: any) => {
-  const id = params?.id;
+//{ params }: any
+const page = (props:Props) => {
+  //const id = params?.id;
 
   return (
     <div>
