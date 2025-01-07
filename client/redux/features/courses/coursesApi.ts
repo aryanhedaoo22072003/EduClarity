@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "../api/apiSlice";
 
 export const coursesApi = apiSlice.injectEndpoints({
@@ -38,8 +39,15 @@ export const coursesApi = apiSlice.injectEndpoints({
         method:"GET",
         credentials:"include" as const,
       }),
+    }),
+    getCourseDetails:builder.query({
+      query:(id:any)=>({
+        url:`get-course/${id}`,
+        method:"GET",
+        credentials:"include" as const,
+      }),
     })
 }),
 })
 
-export const {useCreateCourseMutation,useGetAllCoursesQuery,useDeleteCourseMutation,useEditCourseMutation,useGetUsersAllCoursesQuery}=coursesApi;
+export const {useCreateCourseMutation,useGetAllCoursesQuery,useDeleteCourseMutation,useEditCourseMutation,useGetUsersAllCoursesQuery,useGetCourseDetailsQuery}=coursesApi;

@@ -9,12 +9,29 @@ import ejs from "ejs";
 import sendMail from "../utils/sendMail";
 import NotificationModel from "../models/notificationModel";
 import { getAllOrdersService, newOrder } from "../services/order.service";
+import { redis } from "../utils/redis";
+require('dotenv').config();
+const stripe=require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 //create order
 
 export const createOrder=CatchAsyncError(async(req:Request,res:Response,next:NextFunction)=>{
     try{
         const {courseId,payment_info}=req.body as IOrder;
+
+        if (payment_info) {
+            if ("id" in payment_info) {
+              const paymentIntentId = payment_info.id;
+              const paymentIntent = await stripe.paymentIntents.retrieve(
+                paymentIntentId
+              );
+    
+              if (paymentIntent.status !== "succeeded") {
+                return next(new ErrorHandler("Payment not authorized!", 400));
+              }
+            }
+          }
+    
 
         const user=await userModel.findById(req.user?._id);
 
@@ -63,6 +80,14 @@ export const createOrder=CatchAsyncError(async(req:Request,res:Response,next:Nex
 
         user?.courses.push({ courseId: course._id.toString() });
 
+        // await redis.set(req.user?._id, JSON.stringify(user));
+        if (req.user?._id) {
+            await redis.set(req.user._id.toString(), JSON.stringify(user));
+          } else {
+            throw new ErrorHandler("User ID is missing. Cannot set Redis key.", 400);
+          }
+          
+
         await user?.save();
 
         newOrder(data,res,next);
@@ -95,3 +120,47 @@ export const getAllOrders = CatchAsyncError(
         return next(new ErrorHandler(error.message, 400));
       }
     });
+
+//  send stripe publishble key
+export const sendStripePublishableKey = CatchAsyncError(
+    async (req: Request, res: Response) => {
+      res.status(200).json({
+        publishablekey: process.env.STRIPE_PUBLISHABLE_KEY,
+      });
+    }
+  );
+
+// new payment
+export const newPayment = CatchAsyncError(
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const myPayment = await stripe.paymentIntents.create({
+          amount: req.body.amount,
+          currency: "USD",
+          description: "EduClarity course services",
+          metadata: {
+            company: "EduClarity",
+          },
+          automatic_payment_methods: {
+            enabled: true,
+          },
+        //   shipping: {
+        //     name: "Harmik Lathiya",
+        //     address: {
+        //       line1: "510 Townsend St",
+        //       postal_code: "98140",
+        //       city: "San Francisco",
+        //       state: "CA",
+        //       country: "US",
+        //     },
+        //   },
+        });
+        res.status(201).json({
+          success: true,
+          client_secret: myPayment.client_secret,
+        });
+      } catch (error: any) {
+        return next(new ErrorHandler(error.message, 500));
+      }
+    }
+  );
