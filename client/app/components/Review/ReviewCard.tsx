@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Ratings from "@/app/utils/Ratings";
 import Image from "next/image";
 import React from "react";

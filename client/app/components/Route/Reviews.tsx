@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { styles } from "@/app/styles/style";
 import Image from "next/image";
 import React from "react";
-import ReviewCard from "../Review/ReviewCard.tsx";
+import ReviewCard from "../Review/ReviewCard";
 
 type Props = {};
 
@@ -25,7 +28,7 @@ export const reviews = [
     avatar: "https://randomuser.me/api/portraits/men/2.jpg",
     profession: "computer systems engineering student | Zimbabwe",
     comment:
-    "Thanks for your amazing programming tutorial channel! Your teaching style is outstanding, and the quality of your tutorials is top-notch. Your ability to break down complex topics into manageable parts, and cover diverse programming languages and topics is truly impressive. The practical applications and real-world examples you incorporate reinforce the theoretical knowledge and provide valuable insights. Your engagement with the audience fosters a supportive learning environment. Thank you for your dedication, expertise, and passion for teaching programming, and keep up the fantastic work!"},
+    "Thanks for your amazing programming tutorial channel! Your teaching style is outstanding, and the quality of your tutorials is top-notch. Your ability to break down complex topics into manageable parts, and cover diverse programming languages and topics is truly impressive. The practical applications and real-world examples you incorporate reinforce the theoretical knowledge and provide valuable insights."},
   {
     name: "Mina Davidson",
     avatar: "https://randomuser.me/api/portraits/women/2.jpg",
@@ -45,7 +48,7 @@ export const reviews = [
     avatar: "https://randomuser.me/api/portraits/women/4.jpg",
     profession: "Full stack web developer | Canada",
     comment:
-    "JoinEduClarity! EduClarity focuses on practical applications rather than just teaching the theory behind programming languages or frameworks. I took a lesson on creating a web marketplace using React JS, and it was very helpful in teaching me the different stages involved in creating a project from start to finish. Overall, I highly recommend E-learning to anyone looking to improve their programming skills and build practical projects. EduClarity is a great resource that will help you take your skills to the next level.",
+    "Join EduClarity! EduClarity focuses on practical applications rather than just teaching the theory behind programming languages or frameworks. I took a lesson on creating a web marketplace using React JS, and it was very helpful in teaching me the different stages involved in creating a project from start to finish. Overall, I highly recommend E-learning to anyone looking to improve their programming skills and build practical projects. EduClarity is a great resource that will help you take your skills to the next level.",
 },
 ];
 
