@@ -175,7 +175,7 @@ const CourseInformation: FC<Props> = ({
             className={`${styles.input}`}
             value={courseInfo.category}
             onChange={(e: any) =>
-              setCourseInfo({ ...courseInfo, category: e.target.value })
+              setCourseInfo({ ...courseInfo, categories: e.target.value })
             }>
               <option className="dark:bg-[#000] text-[#fff]" value="">Select Category</option>
               {categories &&

@@ -54,7 +54,8 @@ const CourseContent: FC<Props> = ({
       item.description === "" ||
       item.videoUrl === "" ||
       item.links[0].title === "" ||
-      item.links[0].url === ""
+      item.links[0].url === ""||
+         item.videoLength === ""
     ) {
       toast.error("Please fill all the fields first!");
     } else {
