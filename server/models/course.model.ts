@@ -69,7 +69,7 @@ const commentSchema = new Schema<IComment>({
   user: Object,
   question: String,
   questionReplies: [Object],
-},{timestamps:true});
+});
 
 const courseDataSchema = new Schema<ICourseData>({
   videoUrl: String,
@@ -93,7 +93,7 @@ const courseSchema = new Schema<ICourse>({
     required: true,
   },
   categories:{
-    type: String,
+    type: [Schema.Types.String],
     required: true,
   },
   price: {

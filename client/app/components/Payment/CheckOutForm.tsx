@@ -1,7 +1,7 @@
 // import { styles } from "@/app/styles/style";
 // import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 // import { useCreateOrderMutation } from "@/redux/features/orders/ordersApi";
- import { styles } from "@/app/styles/style";
+import { styles } from "@/app/styles/style";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import { useCreateOrderMutation } from "@/redux/features/orders/ordersApi";
 import {
@@ -10,11 +10,11 @@ import {
    useElements,
    useStripe,
  } from "@stripe/react-stripe-js";
-import { skip } from "node:test";
+
 import { redirect } from "next/navigation";
  import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-// import { toast } from "react-hot-toast";
+
 // import socketIO from "socket.io-client";
 // const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
 // const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
@@ -67,6 +67,7 @@ type Props = {
          toast.error(errorMessage.data.message);
        }
     }
+    
    }, [orderData,error])
 
 
@@ -90,4 +91,3 @@ type Props = {
    };
 
  export default CheckOutForm;
-

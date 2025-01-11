@@ -5,23 +5,24 @@ import Link from "next/link";
 import CourseContentList from  '../Course/CourseContentList'
 import React, { useState } from "react";
 import { IoCheckmarkDoneOutline, IoCloseOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { format } from "timeago.js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckOutForm from "../Payment/CheckOutForm";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 type Props = {
   data: any;
   stripePromise: any;
   clientSecret: string;
-//   setRoute: any;
-//   setOpen: any;
+  setRoute: any;
+  setOpen: any;
 };
 
 const CourseDetails = ({ data,stripePromise, clientSecret}: Props) => {
-  const { user } = useSelector((state: any) => state.auth);
+//   const { user } = useSelector((state: any) => state.auth);
   const [open, setOpen] = useState(false);
-
-
+  const {data:userData}=useLoadUserQuery(undefined,{});
+  const user=userData?.user;
   const dicountPercentenge =
     ((data?.estimatedPrice - data.price) / data?.estimatedPrice) * 100;
 
@@ -239,3 +240,5 @@ const CourseDetails = ({ data,stripePromise, clientSecret}: Props) => {
   );
 };
 export default CourseDetails;
+
+
