@@ -22,7 +22,7 @@ const CoursePlayer: FC<Props> = ({ videoUrl }) => {
   }, [videoUrl]);
   return (
     <div
-      style={{ position: "relative", paddingTop: "41%"}}
+      style={{ position: "relative", paddingTop: "56.25%",overflow:"hidden"}}
     >
       {videoData.otp && videoData.playbackInfo !== "" && (
         <iframe
@@ -31,7 +31,7 @@ const CoursePlayer: FC<Props> = ({ videoUrl }) => {
             position: "absolute",
             top: 0,
             left: 0,
-            width: "90%",
+            width: "100%",
             height: "100%",
             border: 0,
           }}

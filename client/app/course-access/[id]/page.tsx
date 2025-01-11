@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import CourseContent from "@/app/components/Course/CourseContent";
 import Loader from "@/app/components/Loader/Loader";
@@ -34,7 +36,7 @@ const Page = ({params}: Props) => {
         <Loader />
     ) : (
         <div>
-          <CourseContent id={id}  />
+          <CourseContent id={id} user={data.user} />
         </div>
     )
    }
