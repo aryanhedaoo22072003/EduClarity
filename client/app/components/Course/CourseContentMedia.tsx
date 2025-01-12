@@ -1,7 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { styles } from "@/app/styles/style";
 import CoursePlayer from "@/app/utils/CoursePlayer";
+import { useAddNewQuestionMutation } from "@/redux/features/courses/coursesApi";
 import Image from "next/image";
-import React, { useState } from "react";
+import { format } from "path";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { AiFillStar, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineStar } from "react-icons/ai";
 
 type Props = {
@@ -10,6 +15,7 @@ type Props = {
   activeVideo: number;
   setActiveVideo: (activeVideo: number) => void;
   user: any;
+  refetch:any;
 };
 
 const CourseContentMedia = ({
@@ -18,14 +24,53 @@ const CourseContentMedia = ({
   activeVideo,
   setActiveVideo,
   user,
+  refetch,
 }: Props) => {
   const [activeBar, setactiveBar] = useState(0);
   const [question, setQuestion] = useState("");
   const [rating, setRating] = useState(1);
   const [review,setReview]=useState("");
+  const [answer,setAnswer]=useState("");
+  const [answerId,setAnswerId]=useState("")
+  const [addNewQuestion,{isSuccess,error,isLoading:questionCreationLoading}]=useAddNewQuestionMutation();
   const isReviewExists = data?.reviews?.find(
     (item: any) => item.user._id === user._id
   );
+
+  const handleQuestion = () => {
+    if (question.length === 0) {
+      toast.error("Question can't be empty");
+    } else {
+      addNewQuestion({
+        question,
+        courseId: id,
+        contentId: data[activeVideo]._id,
+      });
+    }
+  };
+  const handleAnswerSubmit = () => {
+    // addAnswerInQuestion({
+    //   answer,
+    //   courseId: id,
+    //   contentId: data[activeVideo]._id,
+    //   questionId: questionId,
+    // });
+    console.log('ffff');
+  };
+
+  useEffect(()=>{
+    if(isSuccess){
+        setQuestion("");
+        refetch();
+        toast.success("Question added successfully");
+    }
+    if(error){
+        if("data" in error){
+            const errorMessage=error as any;
+            toast.error(errorMessage.data.message);
+        }
+    }
+  },[isSuccess,error])
 
 
   return (
@@ -138,11 +183,11 @@ const CourseContentMedia = ({
           </div>
           <div className="w-full flex justify-end">
             <div
-              className={`${styles.button} !w-[120px] !h-[40px] text-[18px] mt-5 
-            //    
-            //     questionCreationLoading && "cursor-not-allowed"
-            //   }`}
-              //  onClick={questionCreationLoading ? () => {} : handleQuestion}
+              className={`${styles.button} !w-[120px] !h-[40px] text-[18px] mt-5 ${questionCreationLoading && 'cursor-not-allowed'}`}
+
+              onClick={  questionCreationLoading ? ()=>{} : handleQuestion}
+           
+            
             >
               Submit
             </div>
@@ -150,7 +195,20 @@ const CourseContentMedia = ({
           <br />
           <br />
           <div className="w-full h-[1px] bg-[#ffffff3b]"></div>
-          <div>{/* question reply */}</div>
+          <div>
+          <CommentReply
+              data={data}
+              activeVideo={activeVideo}
+              answer={answer}
+              setAnswer={setAnswer}
+              handleAnswerSubmit={handleAnswerSubmit}
+              user={user}
+              setAnswerId={setAnswerId}
+            //   questionId={questionId}
+            //   setQuestionId={setQuestionId}
+            //   answerCreationLoading={answerCreationLoading}
+            />
+          </div>
         </>
       )}
 
@@ -232,4 +290,73 @@ const CourseContentMedia = ({
     </div>
   );
 };
+
+const CommentReply = ({
+    data,
+    activeVideo,
+    answer,
+    setAnswer,
+    handleAnswerSubmit,
+    user,
+    setAnswerId
+    // questionId,
+    // setQuestionId,
+    // answerCreationLoading,
+  }: any) => {
+    return (
+        <>
+      <div className="w-full my-3">
+        {data[activeVideo].questions.map((item: any, index: any) => (
+          <CommentItem
+            key={index}
+            data={data}
+            activeVideo={activeVideo}
+            item={item}
+            index={index}
+            answer={answer}
+            setAnswer={setAnswer}
+            // questionId={questionId}
+            // setQuestionId={setQuestionId}
+            handleAnswerSubmit={handleAnswerSubmit}
+           // answerCreationLoading={answerCreationLoading}
+          />
+        ))}
+      </div>
+    </>
+  );
+};
+
+const CommentItem = ({
+    data,
+    activeVideo,
+    item,
+    answer,
+    setAnswer,
+    handleAnswerSubmit,
+   
+  }: any) => {
+    console.log(item);
+    return(
+
+        <>
+        <div className="my-4">
+        <div className="flex mb-2">
+            <div className="w-[50px] h-[50px]">
+                <div className="w-[50px] h-[50px] bg-slate-600 rounded-[50px] flex items-center justify-center cursor-pointer">
+                    <h1 className="uppercase text-[18px]">
+                        {item?.user.name.slice(0,2)}
+                    </h1>
+                </div>
+            </div>
+            <div className="pl-3">
+                <h5 className="text-[20px]"> {item?.user.name}</h5>
+                <p>{item?.question}</p>
+                {/* <small className="text-[#ffffff83]">{format(item.createdAt)}</small> */}
+            </div>
+        </div>
+        </div>
+        </>
+    )
+}
+
 export default CourseContentMedia;
