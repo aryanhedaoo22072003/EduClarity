@@ -4,7 +4,7 @@ import { styles } from "@/app/styles/style";
 import CoursePlayer from "@/app/utils/CoursePlayer";
 import { useAddNewQuestionMutation } from "@/redux/features/courses/coursesApi";
 import Image from "next/image";
-import { format } from "path";
+import { format } from "timeago.js";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AiFillStar, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineStar } from "react-icons/ai";
@@ -341,17 +341,31 @@ const CommentItem = ({
         <>
         <div className="my-4">
         <div className="flex mb-2">
-            <div className="w-[50px] h-[50px]">
+            {/* <div className="w-[50px] h-[50px]">
                 <div className="w-[50px] h-[50px] bg-slate-600 rounded-[50px] flex items-center justify-center cursor-pointer">
                     <h1 className="uppercase text-[18px]">
                         {item?.user.name.slice(0,2)}
                     </h1>
                 </div>
+            </div> */}
+            <div>
+            <Image
+              src={
+                  item. user.avatar
+                  ? item.user.avatar.url
+                  : "https://res.cloudinary.com/dshp9jnuy/image/upload/v1665822253/avatars/nrxsg8sd9iy10bbsoenn.png"
+              }
+              width={50}
+              height={50}
+              alt=""
+              className="w-[50px] h-[50px] rounded-full object-cover"
+            />
             </div>
+
             <div className="pl-3">
                 <h5 className="text-[20px]"> {item?.user.name}</h5>
                 <p>{item?.question}</p>
-                {/* <small className="text-[#ffffff83]">{format(item.createdAt)}</small> */}
+                <small className="text-[#ffffff83]">{!item.createdAt ? "" : format(item?.createdAt)}</small>
             </div>
         </div>
         </div>
