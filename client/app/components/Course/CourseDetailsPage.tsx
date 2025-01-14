@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { loadStripe } from "@stripe/stripe-js";
 import React, {  useEffect, useState } from "react";
 import Loader from "../Loader/Loader";

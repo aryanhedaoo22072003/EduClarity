@@ -12,7 +12,7 @@
 // }
 
 // const Page = ({params}: Props) => {
-//     const id = params.id;
+//   const id = params.id;
 //   const { isLoading, error, data } = useLoadUserQuery(undefined, {});
 
 //   useEffect(() => {
@@ -45,6 +45,7 @@
 // }
 
 // export default Page
+
 
 
 'use client';

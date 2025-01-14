@@ -56,3 +56,4 @@ const CourseContent = ({ id,user }: Props) => {
 };
 
 export default CourseContent;
+

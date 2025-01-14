@@ -1,3 +1,4 @@
+import { content } from "html2canvas/dist/types/css/property-descriptors/content";
 import { apiSlice } from "../api/apiSlice";
 
 export const coursesApi = apiSlice.injectEndpoints({
@@ -46,8 +47,8 @@ export const coursesApi = apiSlice.injectEndpoints({
         credentials: "include" as const,
       }),
     }),
-    getCourseContent: builder.query({
-      query: (id: string) => ({
+    getCourseContent: builder.query({//any ke jgh string tha
+      query: (id: any) => ({
         url: `get-course-content/${id}`,
         method: "GET",
         credentials: "include" as const,
@@ -65,6 +66,16 @@ export const coursesApi = apiSlice.injectEndpoints({
         credentials: "include" as const,
       }),
     }),
+    addAnswerInQuestion:builder.mutation({
+      query:({answer,courseId,contentId,questionId})=>({
+        url:"add-answer",
+        body:{
+          answer,courseId,contentId,questionId
+        },
+        method:"PUT",
+        credentials:"include" as const
+    })
+    })
   }),
 });
 
@@ -76,5 +87,6 @@ export const {
   useGetUsersAllCoursesQuery,
   useGetCourseDetailsQuery,
   useGetCourseContentQuery,
-  useAddNewQuestionMutation
+  useAddNewQuestionMutation,
+  useAddAnswerInQuestionMutation
 } = coursesApi;
