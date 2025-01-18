@@ -54,4 +54,5 @@ courseRouter.put("/add-courses", updateAccessToken,isAuthenticated,authorizeRole
 courseRouter.delete("/delete-course/:id", updateAccessToken,isAuthenticated,authorizeRoles("admin"), deleteCourse);
 
 courseRouter.post("/getVdoCipherOTP",generateVideoUrl);
+
 export default courseRouter;

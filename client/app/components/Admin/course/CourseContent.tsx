@@ -137,7 +137,9 @@ const CourseContent: FC<Props> = ({
                 className={`w-full bg-[#cdc8c817] p-4 ${
                   showSectionInput ? "mt-10" : "mb-0"
                 }`}
+                key={index}
               >
+                
                 {showSectionInput && (
                   <>
                     <div className="flex w-full items-center">

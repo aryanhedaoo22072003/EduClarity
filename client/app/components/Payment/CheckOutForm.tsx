@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import { styles } from "@/app/styles/style";
-// import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
-// import { useCreateOrderMutation } from "@/redux/features/orders/ordersApi";
+
 import { styles } from "@/app/styles/style";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import { useCreateOrderMutation } from "@/redux/features/orders/ordersApi";
@@ -62,6 +60,7 @@ type Props = {
    if(orderData){
     setLoadUser(true);
     redirect(`/course-access/${data._id}`);
+
     }
 
    if(error){
@@ -94,3 +93,5 @@ type Props = {
    };
 
  export default CheckOutForm;
+
+

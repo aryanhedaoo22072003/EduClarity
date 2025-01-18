@@ -1,6 +1,6 @@
 import { styles } from "@/app/styles/style";
 import CoursePlayer from "@/app/utils/CoursePlayer";
-import { useAddNewQuestionMutation } from "@/redux/features/courses/coursesApi";
+import { useAddAnswerInQuestionMutation, useAddNewQuestionMutation, useAddReviewInCourseMutation, useGetCourseDetailsQuery } from "@/redux/features/courses/coursesApi";
 import Image from "next/image";
 import { format } from "timeago.js";
 import React, { useEffect, useState } from "react";
@@ -12,6 +12,8 @@ import {
   AiOutlineStar,
 } from "react-icons/ai";
 import { BiMessage } from "react-icons/bi";
+import { VscVerifiedFilled } from "react-icons/vsc";
+import Ratings from "@/app/utils/Ratings";
 
 type Props = {
   data: any;
@@ -40,10 +42,21 @@ const CourseContentMedia = ({
     addNewQuestion,
     { isSuccess, error, isLoading: questionCreationLoading },
   ] = useAddNewQuestionMutation();
- 
-  const [addAnswerInQuestion,{isSuccess:answerSuccess,error:answerError,isLoading:answerCreationLoading}]=useAddNewQuestionMutation();
 
-  const isReviewExists = data?.reviews?.find(
+  const { data: courseData,refetch:courseRefetch } = useGetCourseDetailsQuery(
+    id,
+    { refetchOnMountOrArgChange: true }
+  );
+ 
+  const [addAnswerInQuestion,{isSuccess:answerSuccess,error:answerError,isLoading:answerCreationLoading}]=useAddAnswerInQuestionMutation();
+
+  const course=courseData?.course;
+
+  const [addReviewInCourse,{isSuccess: reviewSuccess,
+    error: reviewError,
+    isLoading: reviewCreationLoading}]=useAddReviewInCourseMutation();
+
+  const isReviewExists = course?.reviews?.find(
     (item: any) => item.user._id === user._id
   );
 
@@ -65,8 +78,16 @@ const CourseContentMedia = ({
       contentId: data[activeVideo]._id,
       questionId: questionId,
     });
-    console.log("ffff");
   };
+
+  const handleReviewSubmit = async () => {
+    if (review.length === 0) {
+      toast.error("Review can't be empty");
+    } else {
+      addReviewInCourse({ review, rating, courseId: id });
+    }
+  };
+
 
   useEffect(() => {
     if (isSuccess) {
@@ -74,24 +95,44 @@ const CourseContentMedia = ({
       refetch();
       toast.success("Question added successfully");
     }
+    if(answerSuccess){
+        setAnswer("");
+        refetch();
+        toast.success("Answer added successfully");
+    }
     if (error) {
       if ("data" in error) {
         const errorMessage = error as any;
         toast.error(errorMessage.data.message);
       }
     }
-  }, [isSuccess, error]);
+    if(answerError){
+        if("data" in answerError){
+        const errorMessage = error as any;
+        toast.error(errorMessage.data.message);
+    }
+    }
+    if (reviewSuccess) {
+      setReview("");
+      setRating(1);
+      courseRefetch();
+      toast.success("Review added successfully");
+    
+    }
+    if (reviewError) {
+      if ("data" in reviewError) {
+        const errorMessage = error as any;
+        toast.error(errorMessage.data.message);
+      }
+    }
+  }, [isSuccess, error,answerSuccess,answerError,reviewSuccess,reviewError]);
 
   return (
     <div className="w-[95%] 800px:w-[86%] py-4 m-auto">
       <CoursePlayer
-        title={data[activeVideo]?.title}
+        title={data[activeVideo]?.title} 
         videoUrl={data[activeVideo]?.videoUrl}
       />
-      {/* <CoursePlayer
-  title={data?.[activeVideo]?.title || "No title available"}
-  videoUrl={data?.[activeVideo]?.videoUrl || "No video available"}
-/>*/}
       <div className="w-full flex items-center justify-between my-3">
         <div
           className={`${
@@ -218,9 +259,9 @@ const CourseContentMedia = ({
               handleAnswerSubmit={handleAnswerSubmit}
               user={user}
             
-              //   questionId={questionId}
+              questionId={questionId}
               setQuestionId={setQuestionId}
-              //   answerCreationLoading={answerCreationLoading}
+              answerCreationLoading={answerCreationLoading}
             />
           </div>
         </>
@@ -282,19 +323,55 @@ const CourseContentMedia = ({
                 </div>
                 <div className="w-full flex justify-end">
                   <div
-                    className={`${styles.button} !w-[120px] !h-[40px] text-[18px] mt-5 800px:mr-0 mr-2
+                    className={`${styles.button} !w-[120px] !h-[40px] text-[18px] mt-5 800px:mr-0 mr-2 ${
+                      reviewCreationLoading && "cursor-no-drop"
+                    }`}
                     
-                    //   reviewCreationLoading && "cursor-no-drop"
-                    // }`}
-                    // onClick={
-                    //   reviewCreationLoading ? () => {} : handleReviewSubmit
-                    // }
+                   
+                    onClick={
+                      reviewCreationLoading ? () => {} : handleReviewSubmit
+                    }
                   >
                     Submit
                   </div>
                 </div>
               </>
             )}
+            <br/>
+            <div className="w-full h-[1px] bg-[#ffffff3b]"></div>
+            <div className="w-full">
+            {(course?.reviews && [...course.reviews].reverse()).map(
+                (item: any, index: number) => (
+                  <div key={index} className="w-full my-5">
+                    <div className="w-full flex">
+
+                    <div>
+                    <Image
+                            src={
+                              item.user.avatar
+                                ? item.user.avatar.url
+                                : "https://res.cloudinary.com/dshp9jnuy/image/upload/v1665822253/avatars/nrxsg8sd9iy10bbsoenn.png"
+                            }
+                            width={50}
+                            height={50}
+                            alt=""
+                            className="w-[50px] h-[50px] rounded-full object-cover"
+                          />
+                  </div>
+                  <div className="ml-2">
+                  <h1 className="text-[18px]">{item?.user.name}</h1>
+                  <Ratings rating={item.rating} />
+                  <p>{item.comment}</p>
+                  <small className="text-[#0000009e] dark:text-[#ffffff83]">
+                    {format(item.createdAt)} •
+                  </small>
+                </div>
+              </div>
+              </div>
+              
+                )
+              )}
+              </div>
           </>
         </div>
       )}
@@ -308,12 +385,11 @@ const CommentReply = ({
   answer,
   setAnswer,
   handleAnswerSubmit,
-  user,
+  // user,
+  answerCreationLoading,
   setQuestionId,
-}: // questionId,
-// setQuestionId,
-// answerCreationLoading,
-any) => {
+  questionId,
+}: any) => {
   return (
     <>
       <div className="w-full my-3">
@@ -325,11 +401,11 @@ any) => {
             item={item}
             index={index}
             answer={answer}
-            
-            // questionId={questionId}
+            setAnswer={setAnswer}
+            questionId={questionId}
             setQuestionId={setQuestionId}
             handleAnswerSubmit={handleAnswerSubmit}
-            // answerCreationLoading={answerCreationLoading}
+            answerCreationLoading={answerCreationLoading}
           />
         ))}
       </div>
@@ -338,27 +414,21 @@ any) => {
 };
 
 const CommentItem = ({
-  data,
+  // data,
+  questionId,
  setQuestionId,
  item,
   answer,
   setAnswer,
   handleAnswerSubmit,
+  answerCreationLoading
 }: any) => {
-  // console.log(item);
 
   const [replyActive, setreplyActive] = useState(false);
   return (
     <>
       <div className="my-4">
         <div className="flex mb-2">
-          {/* <div className="w-[50px] h-[50px]">
-                <div className="w-[50px] h-[50px] bg-slate-600 rounded-[50px] flex items-center justify-center cursor-pointer">
-                    <h1 className="uppercase text-[18px]">
-                        {item?.user.name.slice(0,2)}
-                    </h1>
-                </div>
-            </div> */}
           <div>
             <Image
               src={
@@ -373,7 +443,7 @@ const CommentItem = ({
             />
           </div>
 
-          <div className="pl-3">
+          <div className="pl-3 dark:text-white text-black">
             <h5 className="text-[20px]"> {item?.user.name}</h5>
             <p>{item?.question}</p>
             <small className=" text-[#000000b8] dark:text-[#ffffff83]">
@@ -426,9 +496,9 @@ const CommentItem = ({
                   />
                 </div>
                 <div className="pl-3">
-                  <h5 className="text-[20px]">{item.user.name}</h5>
+                  <h5 className="text-[20px]">{item.user.name}</h5>{item.user.role==="admin" && <VscVerifiedFilled className="text-[#0095F6] ml-2 text-[20px]"/>}
 
-                  <p>{item.comment}</p>
+                  <p>{item.answer}</p>
                   <small className="text-[#ffffff83]">
                     {format(item.createdAt)} •
                   </small>
@@ -442,13 +512,17 @@ const CommentItem = ({
                   placeholder="Enter your answer..."
                   value={answer}
                   onChange={(e: any) => setAnswer(e.target.value)}
-                  className={`block 800px:ml-12 mt-2 outline-none bg-transparent border-b border-[#00000027] dark:text-white text-black dark:border-[#fff] p-[5px] w-[95%] `}
+                  className={`block 800px:ml-12 mt-2 outline-none bg-transparent border-b border-[#00000027] dark:text-white text-black dark:border-[#fff] p-[5px] w-[95%] 
+                    ${
+                    answer === "" ||
+                    (answerCreationLoading && "cursor-not-allowed")
+                  }`}
                 />
                 <button
                   type="submit"
                   className="absolute right-0 bottom-1"
                   onClick={handleAnswerSubmit}
-                  //disabled={answer === "" || answerCreationLoading}
+                  disabled={answer === "" ||  answerCreationLoading}
                 >
                   Submit
                 </button>
@@ -462,4 +536,4 @@ const CommentItem = ({
   );
 };
 
-export default CourseContentMedia;
+export default CourseContentMedia; 

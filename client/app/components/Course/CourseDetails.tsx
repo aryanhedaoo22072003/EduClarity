@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { styles } from "@/app/styles/style";
 import CoursePlayer from "@/app/utils/CoursePlayer";
 import Ratings from "@/app/utils/Ratings";
@@ -182,7 +181,7 @@ const CourseDetails = ({ data,stripePromise, clientSecret}: Props) => {
                 </h4>
               </div>
               <div className="flex items-center">
-                {isPurchased ? (
+                {isPurchased  ? (
                   <Link
                     className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
                     href={`/course-access/${data._id}`}

@@ -12,8 +12,8 @@ type Props = {
 
 const CourseCard: FC<Props> = ({ item, isProfile }) => {
   // Log the entire item object and its thumbnail property
-  console.log("CourseCard item:", item);
-  console.log("Thumbnail URL:", item.thumbnail?.url);
+  // console.log("CourseCard item:", item);
+  // console.log("Thumbnail URL:", item.thumbnail?.url);
 
   return (
     <Link

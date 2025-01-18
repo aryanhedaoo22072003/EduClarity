@@ -22,7 +22,7 @@ interface ICourseData extends Document {
   title: string;
   description: string;
   videoUrl: string;
-  videoThumbnail: object;
+  videoThumbnail: string;//object
   videoSection: string;
   videoLength: number;
   videoPlayer: string;
@@ -35,11 +35,14 @@ interface ICourse extends Document {
   _id:mongoose.Types.ObjectId; 
   name: string;
   description: string;
-  categories:string;
+  categories:string[];
   price: number;
   estimatedPrice?: number;
-  thumbnail: object;
-  tags: string;
+  thumbnail: {
+    url: string;
+    public_id:string;
+  };
+  tags: string[];
   level: string;
   demoUrl: string;
   benefits: { title: string }[];
@@ -73,7 +76,7 @@ const commentSchema = new Schema<IComment>({
 
 const courseDataSchema = new Schema<ICourseData>({
   videoUrl: String,
-  videoThumbnail: Object,
+  videoThumbnail: String,//object
   title: String,
   videoSection: String,
   description: String,
@@ -93,7 +96,7 @@ const courseSchema = new Schema<ICourse>({
     required: true,
   },
   categories:{
-    type: [Schema.Types.String],
+    type:[String],
     required: true,
   },
   price: {
@@ -105,16 +108,16 @@ const courseSchema = new Schema<ICourse>({
   },
   thumbnail: {
     public_id: {
-      //required: true,
+      
       type: String,
     },
     url: {
-      //required: true,
+      
       type: String,
     },
   },
   tags: {
-    type: String,
+    type: [String],
     required: true,
   },
   level: {

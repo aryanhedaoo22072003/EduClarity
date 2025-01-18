@@ -408,15 +408,15 @@ export const newPayment = CatchAsyncError(
       const myPayment = await stripe.paymentIntents.create({
         amount: req.body.amount,
         currency: "USD",
-        description: "E-learning course services",
+        description: "Educlarity course services",
         metadata: {
-          company: "E-Learning",
+          company: "Educlarity",
         },
         automatic_payment_methods: {
           enabled: true,
         },
         shipping: {
-          name: "Harmik Lathiya",
+          name: "aryan hedaoo",
           address: {
             line1: "510 Townsend St",
             postal_code: "98140",
